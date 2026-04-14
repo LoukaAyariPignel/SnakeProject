@@ -13,12 +13,21 @@ class Snake:
 
         if self.direction == "left":
             tete_x -= self.taille_bloc
+            if self.check_wall_collision():
+                tete_x = 24*self.taille_bloc
         elif self.direction == "right":
             tete_x += self.taille_bloc
+            if self.check_wall_collision():
+                tete_x = 0
         elif self.direction == "up":
             tete_y -= self.taille_bloc
+            if self.check_wall_collision():
+                tete_y = 24*self.taille_bloc
         elif self.direction == "down":
             tete_y += self.taille_bloc
+            if self.check_wall_collision():
+                tete_y = 0
+
 
         self.body.insert(0, [tete_x, tete_y])
 
@@ -32,9 +41,9 @@ class Snake:
         return False
 
     def check_wall_collision(self):
-        if self.body[0][0] >= self.taille_bloc*25 or self.body[0][1] >= self.taille_bloc*25:
+        if (self.body[0][0] >= self.taille_bloc*24 and self.direction == "right") or (self.body[0][1] >= self.taille_bloc*24 and self.direction == "down"):
             return True
-        if self.body[0][0] <= 0 or self.body[0][1] <= 0:
+        if (self.body[0][0] <= 0 and self.direction == "left") or (self.body[0][1] <= 0 and self.direction == "up"):
             return True
         return False
 
